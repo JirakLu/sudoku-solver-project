@@ -18,10 +18,12 @@ public class Main {
 
         Sudoku sudoku = new Sudoku(sud);
 
+        SudokuDisplay display = new SudokuDisplay(sud);
+        display.rerenderSudoku(sud);
 
-        long start = System.currentTimeMillis();
-        sudoku.basicSolve();
-        long finish = System.currentTimeMillis();
-        System.out.println(finish-start);
+//        long start = System.currentTimeMillis();
+//        sudoku.basicSolve();
+//        long finish = System.currentTimeMillis();
+//        System.out.println(finish-start);
     }
 }
