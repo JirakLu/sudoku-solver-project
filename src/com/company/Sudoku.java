@@ -11,24 +11,29 @@ public class Sudoku {
     private int sudokuHeight;
     private int sudokuWidth;
 
+    private SudokuDisplay sudokuDisplay;
+
     public Sudoku(int[][] sudoku) {
         this.starterSudoku = sudoku;
         this.helperSudoku = sudoku;
         this.sudokuHeight = sudoku.length;
         this.sudokuWidth = sudoku[0].length;
+        this.sudokuDisplay = new SudokuDisplay(sudoku);
     }
 
-    public boolean basicSolve() {
+    public boolean basicSolve() throws InterruptedException {
         for (int row = 0; row < this.sudokuHeight; row++) {
             for (int col = 0; col < this.sudokuWidth; col++) {
                 if (this.helperSudoku[row][col] == 0) {
                     for (int number = 0; number <= 9; number++) {
                         if (isValidPlacement(row, col, number)) {
                             this.helperSudoku[row][col] = number;
+                            this.sudokuDisplay.updateCoord(row,col,number);
                             if (basicSolve()) {
                                 return true;
                             } else {
                                 this.helperSudoku[row][col] = 0;
+                                this.sudokuDisplay.updateCoord(row,col,0);
                             }
                         }
                     }

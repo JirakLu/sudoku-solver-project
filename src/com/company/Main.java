@@ -2,7 +2,7 @@ package com.company;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         int[][] sud = {
                 {0,0,0,0,4,8,0,0,0},
@@ -18,12 +18,8 @@ public class Main {
 
         Sudoku sudoku = new Sudoku(sud);
 
-        SudokuDisplay display = new SudokuDisplay(sud);
-        display.rerenderSudoku(sud);
 
-//        long start = System.currentTimeMillis();
-//        sudoku.basicSolve();
-//        long finish = System.currentTimeMillis();
-//        System.out.println(finish-start);
+        sudoku.basicSolve();
+
     }
 }

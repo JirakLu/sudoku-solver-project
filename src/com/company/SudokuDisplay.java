@@ -2,48 +2,40 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class SudokuDisplay extends JFrame {
 
     private int[][] startedSudoku;
 
+    private JLabel[][] labels;
+
 
     public SudokuDisplay(int[][] starterSudoku) {
         this.startedSudoku = starterSudoku;
+        this.labels = new JLabel[starterSudoku.length][starterSudoku[0].length];
 
         this.setSize(700,700);
         this.setLocationRelativeTo(null);
 
-        GridLayout gridMain = new GridLayout(3,3);
-        gridMain.setHgap(10);
-        gridMain.setVgap(10);
+        GridLayout gridMain = new GridLayout(9,9);
+        gridMain.setVgap(1);
+        gridMain.setHgap(1);
 
         JPanel panel = new JPanel();
-        panel.setSize(600,600);
+        panel.setSize(603,603);
         panel.setLayout(gridMain);
-        panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        for (int i = 0; i < 9; i++) {
-            JPanel panelicek = new JPanel();
-
-            GridLayout grid = new GridLayout(3,3);
-            grid.setHgap(10);
-            grid.setVgap(10);
-
-            panelicek.setSize(190,190);
-            panelicek.setLayout(grid);
-            panelicek.setBorder(BorderFactory.createLineBorder(Color.black));
-
-            for (int j = 0; j < 9; j++) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
                 JLabel label = new JLabel("",SwingConstants.CENTER);
-                label.setSize(60,60);
-                label.setText(j+1+"");
+                label.setSize(67,67);
+                label.setText(starterSudoku[row][col] == 0 ? "" : starterSudoku[row][col]+"");
                 label.setBorder(BorderFactory.createLineBorder(Color.black));
-                label.setFont(new Font("Serif", Font.PLAIN, 25));
-                panelicek.add(label);
+                label.setFont(new Font("Serif", Font.PLAIN, 35));
+                if (starterSudoku[row][col] == 0) label.setForeground(Color.RED);
+                labels[row][col] = label;
+                panel.add(label);
             }
-            panel.add(panelicek);
         }
 
         this.add(panel);
@@ -54,6 +46,10 @@ public class SudokuDisplay extends JFrame {
 
     public void rerenderSudoku(int[][] halfSolved) {
 
+    }
+
+    public void updateCoord(int x, int y, int number) {
+        this.labels[x][y].setText(number == 0 ? "" : number+"");
     }
 
 }
