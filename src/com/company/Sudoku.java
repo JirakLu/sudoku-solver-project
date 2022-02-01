@@ -5,23 +5,19 @@ import java.util.Arrays;
 public class Sudoku {
 
 //    Sudoku info
-    private int[][] starterSudoku;
+    private final int[][] starterSudoku;
     private int[][] helperSudoku;
     public int[][] solvedSudoku;
-    private int[][] test;
 //    Sudoku params
     private final int sudokuHeight;
     private final int sudokuWidth;
-//    Time elapsed
-    private long timeElapsed;
 //    Sudoku graphic
     private SudokuDisplay sudokuDisplay;
     private boolean graphic = false;
 
     public Sudoku(int[][] sudoku) {
-        this.starterSudoku = sudoku;
-        this.test = sudoku;
-        this.helperSudoku = sudoku;
+        this.starterSudoku = copy(sudoku);
+        this.helperSudoku = copy(sudoku);
         this.sudokuHeight = sudoku.length;
         this.sudokuWidth = sudoku[0].length;
     }
@@ -46,8 +42,8 @@ public class Sudoku {
                 }
             }
         }
-        this.solvedSudoku = this.helperSudoku;
-        this.helperSudoku = this.starterSudoku;
+        this.solvedSudoku = copy(this.helperSudoku);
+        this.helperSudoku = copy(this.starterSudoku);
         return true;
     }
 
@@ -59,7 +55,7 @@ public class Sudoku {
         System.out.println("fastest solve");
     }
 
-    enum Solve { basicSolve, threadSolve, fastestSolve};
+    enum Solve { basicSolve, threadSolve, fastestSolve}
 
 //    Timed solve
     public long timeSolve(Solve solveType) {
@@ -70,9 +66,10 @@ public class Sudoku {
             case fastestSolve -> this.fastestSolve();
         }
         long finish = System.currentTimeMillis();
-        this.timeElapsed = finish - start;
-        System.out.println("Výpočet trval -> " + this.timeElapsed + "ms.");
-        return this.timeElapsed;
+        //    Time elapsed
+        long timeElapsed = finish - start;
+        System.out.println("Výpočet trval -> " + timeElapsed + "ms.");
+        return timeElapsed;
     }
 
 //    Graphic solve
@@ -115,6 +112,19 @@ public class Sudoku {
 
     private boolean isValidPlacement(int row, int col, int number) {
         return isValidPlaceRow(row, number) && isValidPlaceCol(col, number) && isValidSquare(row, col, number);
+    }
+
+    private int[][] copy(int[][] src) {
+        if (src == null) {
+            return null;
+        }
+
+        int[][] copy = new int[src.length][];
+        for (int i = 0; i < src.length; i++) {
+            copy[i] = src[i].clone();
+        }
+
+        return copy;
     }
 
 }
