@@ -17,9 +17,8 @@ public class Main {
         };
 
         Sudoku sudoku = new Sudoku(sud);
-
-
-        sudoku.basicSolve();
+        sudoku.timeSolve(Sudoku.Solve.basicSolve);
+        sudoku.timeSolve(Sudoku.Solve.basicSolve);
 
     }
 }

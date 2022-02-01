@@ -44,11 +44,7 @@ public class SudokuDisplay extends JFrame {
         this.setVisible(true);
     }
 
-    public void rerenderSudoku(int[][] halfSolved) {
-
-    }
-
-    public void updateCoord(int x, int y, int number) {
+    public void updateCord(int x, int y, int number) {
         this.labels[x][y].setText(number == 0 ? "" : number+"");
     }
 
