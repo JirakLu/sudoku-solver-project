@@ -1,22 +1,43 @@
 package com.company;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws IOException {
 
-        int[][] sud = {
-                {0,0,0,0,4,8,0,0,0},
-                {1,0,4,0,5,0,0,0,0},
-                {0,0,8,0,0,0,0,0,0},
-                {0,1,0,0,0,0,0,0,0},
-                {0,0,5,0,9,0,3,1,0},
-                {7,0,9,0,1,0,5,6,0},
-                {3,0,1,0,0,0,0,0,0},
-                {0,0,0,0,0,1,0,2,3},
-                {8,0,6,5,2,0,0,7,0},
-        };
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://sugoku.herokuapp.com/board?difficulty=hard")
+                .method("GET", null)
+                .addHeader("Content-Type", "application/json")
+                .build();
+        Response response = client.newCall(request).execute();
 
-        Sudoku sudoku = new Sudoku(sud);
+        JSONObject jsonObj = new JSONObject(response.body().string());
+        JSONArray jsonArr = jsonObj.getJSONArray("board");
+
+        int[][] apiSudoku = new int[jsonArr.length()][9];
+
+        for(int i = 0; i<jsonArr.length(); i++){
+            JSONArray jsa1 = jsonArr.getJSONArray(i);
+
+            for(int j = 0; j<jsa1.length();j++){
+                apiSudoku[i][j] = jsa1.getInt(j);
+            }
+
+        }
+
+
+        Sudoku sudoku = new Sudoku(apiSudoku);
         sudoku.graphicSolve(Sudoku.Solve.basicSolve);
         sudoku.timeSolve(Sudoku.Solve.basicSolve);
 
