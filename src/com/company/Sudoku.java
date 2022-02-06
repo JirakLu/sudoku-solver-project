@@ -75,7 +75,7 @@ public class Sudoku {
 //    Graphic solve
     public void graphicSolve(Solve solveType) {
         this.graphic = true;
-        this.sudokuDisplay = new SudokuDisplay(this.starterSudoku);
+//        this.sudokuDisplay = new SudokuDisplay(this.starterSudoku);
         switch (solveType) {
             case basicSolve -> this.basicSolve();
             case threadSolve -> this.threadSolve();
